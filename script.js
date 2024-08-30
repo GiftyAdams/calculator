@@ -27,3 +27,13 @@ document.addEventListener("keydown", function (event) {
     calculate();
   }
 });
+
+document.addEventListener("keydown", function (event) {
+  if (event.key === "Escape") {
+    display.value = "";
+  }
+});
+
+document.addEventListener("click", function () {
+  display.focus();
+});
