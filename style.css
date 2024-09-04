@@ -1,9 +1,81 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body {
     margin: 0;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    min-height: 100vh
+}
+
+.dropbtn {
+    width: 80px;
+    height: 40px;
+    border-radius: 40px;
+    border: none;
+    color: white;
+    background-color: #2a2a2c;
+    font-size: 1rem;
+    cursor: pointer;
+    text-align: center;
+    align-items: center;
+}
+
+.dropup {
+    position: relative;
+    display: inline-block;
+}
+
+.dropupcontent {
+    display: none;
+    position: absolute;
+    background-color: rgb(46, 45, 45);
+    min-width: 130px;
+    bottom: 40px;
+    z-index: 1;
+    border-radius: 10px;
+}
+
+.dropupcontent a {
+    color: white;
+    padding: 12px 10px;
+    text-decoration: none;
+    display: block;
+    cursor: pointer;
+}
+
+.dropcontent {
+    display: none;
+    position: absolute;
+    background-color: rgb(46, 45, 45);
+    min-width: 130px;
+    bottom: 70px;
+    z-index: 1;
+    border-radius: 10px;
+}
+
+.dropcontent a {
+    color: white;
+    padding: 12px 10px;
+    text-decoration: none;
+    display: block;
+    cursor: pointer;
+}
+
+/* .dropupcontent a:hover {
+    background-color: rgb(46, 45, 45);
+} */
+
+/* .dropup:hover .dropup-content {
+    display: block;
+} */
+
+.dropup:hover .dropbtn {
+    background-color: rgb(72, 70, 70);
 }
 
 .operator-equal {
@@ -12,12 +84,12 @@ body {
 }
 
 .operator-btn {
-    background-color: rgb(121, 118, 118);
+    background-color: #5c5c5e;
 }
 
 .operator {
-    background-color: rgb(248, 144, 7);
-    color: white;
+    background-color: #ff9f0c;
+    color: black;
 }
 
 .operator:hover {
@@ -28,24 +100,30 @@ body {
     background-color: rgb(250, 175, 76);
 }
 
+
+
 #display {
+    display: flex;
+    justify-content: center;
     color: white;
-    width: 100%;
-    max-width: 500px;
+    width: 350px;
+    max-width: 100%;
     padding: 20px;
     border: none;
     align-items: center;
     text-align: left;
     font-size: 2rem;
-    background-color: rgb(46, 45, 45);
+    background-color: #000000;
     cursor: pointer;
     caret-color: transparent;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
 }
 
 #calculator {
     font-family: Arial, sans-serif;
-    background-color: rgb(54, 53, 53);
-    border-radius: 15px;
+    background-color: black;
+    /* border-radius: 15px; */
     max-width: 350px;
     overflow: hidden;
 }
@@ -53,8 +131,10 @@ body {
 .keys {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 6px;
-    padding: 25px;
+    gap: 5px;
+    padding: 10px 7px 10px 15px;
+    margin-top: 15px;
+    margin-bottom: 2px;
 }
 
 button {
@@ -63,7 +143,7 @@ button {
     border-radius: 50%;
     border: none;
     color: white;
-    background-color: rgb(72, 70, 70);
+    background-color: #2a2a2c;
     font-size: 1.5rem;
     cursor: pointer;
 }
@@ -74,4 +154,89 @@ button:hover {
 
 button:active {
     background-color: rgb(100, 91, 91);
+}
+
+
+#scientific {
+    font-family: Arial, sans-serif;
+    background-color: #000000;
+    /* border-radius: 15px; */
+    width: 350px;
+
+}
+
+.key-operator>span {
+    width: 80px;
+    height: 80px;
+    border-radius: 30%;
+    border: none;
+    color: white;
+    font-size: 10px;
+    text-align: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.key-operator {
+    width: 50px;
+    height: 25px;
+    border-radius: 50px;
+    border: none;
+    color: white;
+    background-color: #1c1c1c;
+    cursor: pointer;
+    text-align: center;
+    align-items: center;
+    gap: 3px;
+}
+
+.key-operator:hover {
+    background-color: rgb(72, 70, 70);
+}
+
+.key-operator:active {
+    background-color: rgb(101, 100, 99);
+}
+
+.style-keys {
+    display: flex;
+    flex-direction: column;
+}
+
+.second-keys {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: 8px;
+    padding: 0 10px 0 10px;
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    place-items: center;
+    width: 100%;
+    padding-top: 5px;
+    background-color: 1c1c1c;
+
+
+}
+
+.switched-keys {
+    background-color: #000000;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 5px;
+    padding: 5px 7px 5px 7px;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+
+.switched-keys>button {
+    width: 80px;
+    height: 40px;
+    border-radius: 40px;
+    border: none;
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+    text-align: center;
+    align-items: center;
 }
