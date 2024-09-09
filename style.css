@@ -7,6 +7,7 @@
 body {
     margin: 0;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     min-height: 100vh
@@ -66,14 +67,6 @@ body {
     cursor: pointer;
 }
 
-/* .dropupcontent a:hover {
-    background-color: rgb(46, 45, 45);
-} */
-
-/* .dropup:hover .dropup-content {
-    display: block;
-} */
-
 .dropup:hover .dropbtn {
     background-color: rgb(72, 70, 70);
 }
@@ -100,9 +93,46 @@ body {
     background-color: rgb(250, 175, 76);
 }
 
+.display-container {
+    position: relative;
+    height: 80px;
+    width: 100%;
+    max-width: 350px;
+    background-color: #000;
+}
 
+.display,
+.result {
+    color: #fff;
+    font-size: 28px;
+    text-align: right;
+    padding: 10px;
+    position: absolute;
+    /* width: calc(100% - 40px); */
+    width: 100%;
+    transition: all 0.3s ease;
+}
 
-#display {
+.display {
+    bottom: 0;
+}
+
+.display.moved {
+    transform: translateY(-30px);
+    font-size: 20px;
+    opacity: 0.5;
+}
+
+.result {
+    opacity: 0;
+    bottom: 0;
+}
+
+.result.visible {
+    opacity: 1;
+}
+
+/* #display {
     display: flex;
     justify-content: center;
     color: white;
@@ -110,15 +140,15 @@ body {
     max-width: 100%;
     padding: 20px;
     border: none;
-    align-items: center;
-    text-align: left;
+    align-items: flex-end;
+    text-align: right;
     font-size: 2rem;
     background-color: #000000;
     cursor: pointer;
     caret-color: transparent;
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
-}
+} */
 
 #calculator {
     font-family: Arial, sans-serif;
@@ -188,6 +218,7 @@ button:active {
     text-align: center;
     align-items: center;
     gap: 3px;
+    font-size: 0.8rem;
 }
 
 .key-operator:hover {
@@ -209,14 +240,27 @@ button:active {
     gap: 8px;
     padding: 0 10px 0 10px;
     margin-top: 10px;
+    /* border-radius: ; */
     margin-left: auto;
     margin-right: auto;
     place-items: center;
     width: 100%;
     padding-top: 5px;
     background-color: 1c1c1c;
+    /* font-size: 1rem; */
+}
 
-
+.second-keys>button {
+    width: 50px;
+    height: 30px;
+    border-radius: 40px;
+    border: none;
+    color: white;
+    font-size: 0.8rem;
+    cursor: pointer;
+    text-align: center;
+    align-items: center;
+    gap: 3px;
 }
 
 .switched-keys {
