@@ -10,28 +10,30 @@
 
 <body>
     <div class="wrap">
-        <input id="display" maxlength="17" autocomplete="off" autofocus>
+        <div class="display-container">
+            <div class="display" id="display">0</div>
+            <div class="result" id="result"></div>
+        </div>
         <div id="calculator">
-
             <div class="keys">
                 <button onclick="clearDisplay()" class="operator-btn">AC</button>
                 <button id="absolute" onclick="calculateAbsolute()" class="operator-btn">+/-</button>
-                <button onclick="appendToDisplay('%')" class="operator-btn">%</button>
-                <button onclick="appendToDisplay('/')" class="operator">÷</button>
-                <button onclick="appendToDisplay('7')">7</button>
-                <button onclick="appendToDisplay('8')">8</button>
-                <button onclick="appendToDisplay('9')">9</button>
+                <button onclick="appendToDisplay('%','1/100')" class="operator-btn">%</button>
+                <button onclick="appendToDisplay('÷','/')" class="operator">÷</button>
+                <button onclick="appendToDisplay('7','7')">7</button>
+                <button onclick="appendToDisplay('8','8')">8</button>
+                <button onclick="appendToDisplay('9','9')">9</button>
 
-                <button onclick="appendToDisplay('*')" class="operator"><small>x</small></button>
-                <button onclick="appendToDisplay('4')">4</button>
-                <button onclick="appendToDisplay('5')">5</button>
-                <button onclick="appendToDisplay('6')">6</button>
+                <button onclick="appendToDisplay('x','*')" class="operator"><small>x</small></button>
+                <button onclick="appendToDisplay('4','4')">4</button>
+                <button onclick="appendToDisplay('5','5')">5</button>
+                <button onclick="appendToDisplay('6','6')">6</button>
 
-                <button onclick="appendToDisplay('-')" class="operator">-</button>
-                <button onclick="appendToDisplay('1')">1</button>
-                <button onclick="appendToDisplay('2')">2</button>
-                <button onclick="appendToDisplay('3')">3</button>
-                <button onclick="appendToDisplay('+')" class="operator">+</button>
+                <button onclick="appendToDisplay('-','-')" class="operator">-</button>
+                <button onclick="appendToDisplay('1','1')">1</button>
+                <button onclick="appendToDisplay('2','2')">2</button>
+                <button onclick="appendToDisplay('3','3')">3</button>
+                <button onclick="appendToDisplay('+','+')" class="operator">+</button>
 
                 <div class="dropup">
                     <button class="dropbutton"><img src="calculator.svg" width="20px"></button>
@@ -41,8 +43,8 @@
                     </div>
                 </div>
 
-                <button onclick="appendToDisplay('0')">0</button>
-                <button onclick="appendToDisplay('.')">.</button>
+                <button onclick="appendToDisplay('0','0')">0</button>
+                <button onclick="appendToDisplay('.','.')">.</button>
                 <button onclick="calculate()" class="operator-equal">=</button>
 
             </div>
@@ -52,130 +54,73 @@
         <div id="scientific" style="display: none">
             <div class="style-keys">
                 <div class="second-keys">
-                    <div datakey="(" class="key-operator">
-                        <span>(</span>
-                    </div>
-                    <div datakey=")" class="key-operator">
-                        <span>)</span>
-                    </div>
-                    <div datakey="mc" class="key-operator">
-                        <span>mc</span>
-                    </div>
-                    <div datakey="m+" class="key-operator">
-                        <span>m+</span>
-                    </div>
-                    <div datakey="m-" class="key-operator">
-                        <span>m-</span>
-                    </div>
-                    <div datakey="mr" class="key-operator">
-                        <span>mr</span>
-                    </div>
-                    <div datakey="2<sup>nd</sup>" class="key-operator">
-                        <span>2<sup>nd</sup></span>
-                    </div>
-                    <div datakey="x<sup>2</sup>" class="key-operator">
-                        <span>x<sup>2</sup></span>
-                    </div>
-                    <div datakey="x<sup>3</sup>" class="key-operator">
-                        <span>x<sup>3</sup></span>
-                    </div>
-                    <div datakey="x<sup>y</sup>" class="key-operator">
-                        <span>x<sup>y</sup></span>
-                    </div>
-                    <div datakey="e<sup>x</sup>" class="key-operator">
-                        <span>e<sup>x</sup></span>
-                    </div>
-                    <div datakey="10<sup>x</sup>" class="key-operator">
-                        <span>10<sup>x</sup></span>
-                    </div>
-                    <div datakey="1/x" class="key-operator">
-                        <span>1/x</span>
-                    </div>
-                    <div datakey="2√ x" class="key-operator">
-                        <span>2√ x</span>
-                    </div>
-                    <div datakey="3√ x" class="key-operator">
-                        <span>3√ x</span>
-                    </div>
-                    <div datakey="y√ x" class="key-operator">
-                        <span>y√ x</span>
-                    </div>
-                    <div datakey="In" class="key-operator">
-                        <span>In</span>
-                    </div>
-                    <div datakey="log<sub>10</sub>" class="key-operator">
-                        <span>log<sub>10</sub></span>
-                    </div>
-                    <div datakey="x!" class="key-operator">
-                        <span>x!</span>
-                    </div>
-                    <div datakey="sin" class="key-operator">
-                        <span>sin</span>
-                    </div>
-                    <div datakey="cos" class="key-operator">
-                        <span>cos</span>
-                    </div>
-                    <div datakey="tan" class="key-operator">
-                        <span>tan</span>
-                    </div>
-                    <div datakey="e" class="key-operator">
-                        <span>e</span>
-                    </div>
-                    <div datakey="EE" class="key-operator">
-                        <span>EE</span>
-                    </div>
-                    <div datakey="Rand" class="key-operator">
-                        <span>Rand</span>
-                    </div>
-                    <div datakey="sinh" class="key-operator">
-                        <span>sinh</span>
-                    </div>
-                    <div datakey="cosh" class="key-operator">
-                        <span>cosh</span>
-                    </div>
-                    <div datakey="tanh" class="key-operator">
-                        <span>tanh</span>
-                    </div>
-                    <div datakey="𝜋" class="key-operator">
-                        <span>𝜋</span>
-                    </div>
-                    <div datakey="Deg" class="key-operator">
-                        <span>Deg</span>
+                    <button onclick="appendToDisplay('(','(')">(</button>
+                    <button onclick=" appendToDisplay(')',')')">)</button>
+                    <button onclick="appendToDisplay('mc','')">mc</button>
+                    <button onclick=" appendToDisplay('m+','')">m+</button>
+                    <button onclick="appendToDisplay('m-','')">m-</button>
+                    <button onclick=" appendToDisplay('mr','')">mr</button>
+
+                    <button onclick="appendToDisplay('2nd','')">2<sup>nd</sup></button>
+                    <button onclick="appendToDisplay('²','x²')">x<sup>2</sup></button>
+                    <button onclick="appendToDisplay('³','x³')">x<sup>3</sup></button>
+                    <button onclick="appendToDisplay('xʸ','')">x<sup>y</sup></button>
+                    <button onclick="appendToDisplay('eˣ','')">e<sup>x</sup></button>
+                    <button onclick="appendToDisplay('10ˣ','')">10<sup>x</sup></button>
+
+                    <button onclick="appendToDisplay('(1÷0)','1/x')">1/x</button>
+                    <button onclick="appendToDisplay('²√x','')">²√x</button>
+                    <button onclick="appendToDisplay('³√x','')">³√x</button>
+                    <button onclick="appendToDisplay('ʸ√x', '')">ʸ√x</button>
+                    <button onclick="appendToDisplay('ln','')">ln</button>
+                    <button onclick="appendToDisplay('log₁₀', '')">log<sub>10</sub></button>
+
+                    <button onclick="appendToDisplay('x!', '')">x!</button>
+                    <button onclick="appendToDisplay('sin','')">sin</button>
+                    <button onclick="appendToDisplay('cos', '')">cos</button>
+                    <button onclick="appendToDisplay('tan', '')">tan</button>
+                    <button onclick="appendToDisplay('e', '*2.71828183')">e</button>
+                    <button onclick="appendToDisplay('EE', '')">EE</button>
+                    <button onclick="appendToDisplay('Rand', '')">Rand</button>
+                    <button onclick="appendToDisplay('sinh', '')">sinh</button>
+                    <button onclick="appendToDisplay('cosh','')">cosh</button>
+                    <button onclick="appendToDisplay('tanh', '')">tanh</button>
+                    <button onclick="appendToDisplay('𝜋', '22/7')" class="piButton">𝜋</button>
+                    <button onclick="appendToDisplay('Deg','')">Deg</button>
+                </div>
+            </div>
+
+            <div class="switched-keys">
+                <button onclick="clearDisplay()" class="operator-btn">AC</button>
+                <button id="newAbsolute" onclick="calculateAbsolute()" class="operator-btn">+/-</button>
+                <button onclick="appendToDisplay('%','1/100')" class="operator-btn">%</button>
+                <button onclick="appendToDisplay('÷','/')" class="operator">÷</button>
+                <button onclick="appendToDisplay('7','7')">7</button>
+                <button onclick="appendToDisplay('8','8')">8</button>
+                <button onclick="appendToDisplay('9','9')">9</button>
+
+                <button onclick="appendToDisplay('x','*')" class="operator"><small>x</small></button>
+                <button onclick="appendToDisplay('4','4')">4</button>
+                <button onclick="appendToDisplay('5','5')">5</button>
+                <button onclick="appendToDisplay('6','6')">6</button>
+
+                <button onclick="appendToDisplay('-','-')" class="operator">-</button>
+                <button onclick="appendToDisplay('1','1')">1</button>
+                <button onclick="appendToDisplay('2','2')">2</button>
+                <button onclick="appendToDisplay('3','3')">3</button>
+                <button onclick="appendToDisplay('+','+')" class="operator">+</button>
+
+                <div class="drop">
+                    <button class="dropbtn"><img src="calculator.svg" width="20px"></button>
+                    <div class="dropcontent">
+                        <a onclick="secondSwitchDisplay()"><img src="plusmindiv.svg" width="20px">Basic</a>
+                        <a onclick="switchDisplay()"><em>f(x)</em>Scientific</a>
                     </div>
                 </div>
+                <button onclick="appendToDisplay('0')">0</button>
+                <button onclick="appendToDisplay('.')">.</button>
+                <button onclick="calculate()" class="operator-equal">=</button>
 
-                <div class="switched-keys">
-                    <button onclick="clearDisplay()" class="operator-btn">AC</button>
-                    <button id="newAbsolute" onclick="calculateAbsolute()" class="operator-btn">+/-</button>
-                    <button onclick="appendToDisplay('%')" class="operator-btn">%</button>
-                    <button onclick="appendToDisplay('/')" class="operator">÷</button>
-                    <button onclick="appendToDisplay('7')">7</button>
-                    <button onclick="appendToDisplay('8')">8</button>
-                    <button onclick="appendToDisplay('9')">9</button>
-
-                    <button onclick="appendToDisplay('*')" class="operator"><small>x</small></button>
-                    <button onclick="appendToDisplay('4')">4</button>
-                    <button onclick="appendToDisplay('5')">5</button>
-                    <button onclick="appendToDisplay('6')">6</button>
-
-                    <button onclick="appendToDisplay('-')" class="operator">-</button>
-                    <button onclick="appendToDisplay('1')">1</button>
-                    <button onclick="appendToDisplay('2')">2</button>
-                    <button onclick="appendToDisplay('3')">3</button>
-                    <button onclick="appendToDisplay('+')" class="operator">+</button>
-
-                    <div class="drop">
-                        <button class="dropbtn"><img src="calculator.svg" width="20px"></button>
-                        <div class="dropcontent">
-                            <a onclick="secondSwitchDisplay()"><img src="plusmindiv.svg" width="20px">Basic</a>
-                            <a onclick="switchDisplay()"><em>f(x)</em>Scientific</a>
-                        </div>
-                    </div>
-                    <button onclick="appendToDisplay('0')">0</button>
-                    <button onclick="appendToDisplay('.')">.</button>
-                    <button onclick="calculate()" class="operator-equal">=</button>
-
-                </div>
             </div>
         </div>
     </div>
