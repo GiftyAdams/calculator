@@ -2,6 +2,7 @@ let displayValue = "0";
 let calculateValue = "";
 const display = document.querySelector("#display");
 const result = document.querySelector("#result");
+let memory = 0;
 
 function updateDisplay() {
   display.textContent = displayValue;
@@ -104,158 +105,91 @@ document.addEventListener("click", function (event) {
     dropcontent.style.display = "none";
   }
 });
+//for absolute button
+function toggleAbsoluteLastNumber(expression) {
+  // Regular expressions to match different types of numbers
+  const regexNumber = /([+-]?\d+)(?=[^\d]*$)/;
+  const regexParenthesizedNumber = /\(-\d+\)(?=[^\d]*$)/;
 
-// function calculateAbsolute(expression) {
-//   // Remove any whitespace from the string
-//   expression = expression.trim();
+  if (regexParenthesizedNumber.test(expression)) {
+    // If the last number is parenthesized negative, remove the parentheses and minus sign
+    return expression.replace(regexParenthesizedNumber, (match) =>
+      match.slice(2, -1)
+    );
+  } else if (regexNumber.test(expression)) {
+    const match = expression.match(regexNumber);
+    const lastNumber = match[1];
 
-//   // Find the last index of a mathematical operator
-//   const lastOperatorIndex = Math.max(
-//     expression.lastIndexOf("+"),
-//     expression.lastIndexOf("-"),
-//     expression.lastIndexOf("*"),
-//     expression.lastIndexOf("/"),
-//     expression.lastIndexOf("x"), // if you're using 'x' for multiplication
-//     expression.lastIndexOf("÷") // if you're using '÷' for division
-//   );
-
-//   // Get the substring after the last operator
-//   let lastNumber = expression.substring(lastOperatorIndex + 1).trim();
-//   let prefix = expression.substring(0, lastOperatorIndex + 1);
-
-//   // Determine if the last number is negative or wrapped in (-)
-//   if (lastNumber.startsWith("(-")) {
-//     // If the last number is in the form (-75), remove the (-) to return the positive number
-//     lastNumber = lastNumber.slice(2, -1); // Remove the (-)
-//   } else if (lastNumber.startsWith("-")) {
-//     // If the last number starts with a negative sign, remove it to make it positive
-//     lastNumber = lastNumber.slice(1); // Remove the negative sign
-//   } else if (lastNumber !== "") {
-//     // If the last number is positive, wrap it in parentheses with a minus sign to make it negative
-//     lastNumber = `${lastNumber}`;
-//   }
-
-//   // Combine the prefix (the part before the last number) with the modified last number
-//   const updatedExpression = prefix + lastNumber;
-
-//   return updatedExpression;
-// // }
-// f
-// unction calculateAbsolute(expression) {
-//   // Remove any whitespace from the string
-//   expression = expression.trim();
-
-//   // Find the last index of a mathematical operator
-//   const lastOperatorIndex = Math.max(
-//     expression.lastIndexOf("+"),
-//     expression.lastIndexOf("-"),
-//     expression.lastIndexOf("*"),
-//     expression.lastIndexOf("/"),
-//     expression.lastIndexOf("x"), // if you're using 'x' for multiplication
-//     expression.lastIndexOf("÷") // if you're using '÷' for division
-//   );
-
-//   // Get the substring after the last operator
-//   let lastNumber = expression.substring(lastOperatorIndex + 1).trim();
-//   let prefix = expression.substring(0, lastOperatorIndex + 1);
-
-//   // Toggle the sign and handle absolute values
-//   if (lastNumber.startsWith("(-")) {
-//     // If the last number is in the form (-70), remove the (-) to return the positive number
-//     lastNumber = lastNumber.slice(2, -1); // Remove the "(-" and ")"
-//   } else if (lastNumber.startsWith("-")) {
-//     // If the last number starts with a negative sign, remove it to make it positive
-//     lastNumber = lastNumber.slice(1); // Remove the negative sign
-//   } else if (lastNumber !== "") {
-//     // If the last number is positive, wrap it in parentheses with a minus sign to make it negative
-//     lastNumber = `(-${lastNumber})`;
-//   }
-
-//   // Combine the prefix (the part before the last number) with the modified last number
-//   const updatedExpression = prefix + lastNumber;
-
-//   return updatedExpression;
-// }
-
-// // Example usage:
-// // console.log((display.value = toggleAbsoluteLastNumber("85+65")));
-// document.querySelector("#absolute").addEventListener("click", function () {
-//   const input = document.querySelector("#display");
-//   const newvalue = calculateAbsolute(displayValue);
-//   displayValue = newvalue;
-// });
-// document.querySelector("#newAbsolute").addEventListener("click", function () {
-//   const input = document.querySelector("#display");
-//   const newvalue = calculateAbsolute(displayValue);
-//   displayValue = newvalue;
-// });
-// // function calculateAbsolute() {
-// //   console.log(displayValue);
-// // }
-// ... existing code ...
-
-function calculateAbsolute() {
-  let lastOperatorIndex = Math.max(
-    displayValue.lastIndexOf("+"),
-    displayValue.lastIndexOf("-"),
-    displayValue.lastIndexOf("*"),
-    displayValue.lastIndexOf("/"),
-    displayValue.lastIndexOf("x"),
-    displayValue.lastIndexOf("÷")
-  );
-
-  if (lastOperatorIndex === -1) {
-    // No operator found, toggle the sign of the entire expression
-    if (displayValue.startsWith("(-") && displayValue.endsWith(")")) {
-      displayValue = displayValue.slice(2, -1);
+    if (lastNumber.startsWith("-")) {
+      // If the number starts with a minus sign, remove it
+      return expression.replace(regexNumber, lastNumber.substring(1));
     } else {
-      displayValue = `(-${displayValue})`;
+      // If the number does not start with a minus sign, add parentheses and a minus sign
+      return expression.replace(regexNumber, `(-${lastNumber})`);
     }
-  } else {
-    let prefix = displayValue.substring(0, lastOperatorIndex + 1);
-    let lastNumber = displayValue.substring(lastOperatorIndex + 1);
-
-    if (lastNumber === "") {
-      // If there's nothing after the operator, do nothing
-      return;
-    }
-
-    if (prefix.endsWith("-")) {
-      // Change subtraction to addition
-      prefix = prefix.slice(0, -1) + "+";
-      if (lastNumber.startsWith("(-") && lastNumber.endsWith(")")) {
-        lastNumber = lastNumber.slice(2, -1);
-      } else {
-        lastNumber = `-${lastNumber}`;
-      }
-    } else if (prefix.endsWith("+")) {
-      // Toggle between positive and negative for addition
-      if (lastNumber.startsWith("-") && lastNumber.endsWith(")")) {
-        lastNumber = lastNumber.slice(2, -1);
-      } else {
-        lastNumber = `(-${lastNumber})`;
-      }
-    } else {
-      // For multiplication and division, just toggle the sign
-      if (lastNumber.startsWith("(-") && lastNumber.endsWith(")")) {
-        lastNumber = lastNumber.slice(2, -1);
-      } else {
-        lastNumber = `(-${lastNumber})`;
-      }
-    }
-
-    displayValue = prefix + lastNumber;
   }
+
+  // If no relevant match is found, return the expression unchanged
+  return expression;
+}
+
+document.querySelector("#absolute").addEventListener("click", function () {
+  displayValue = toggleAbsoluteLastNumber(displayValue);
+  calculateValue = toggleAbsoluteLastNumber(calculateValue);
+  console.log(displayValue, calculateValue);
+  updateDisplay();
+});
+
+function handleExponent(superscript) {
+  let number = parseFloat(displayValue);
+  let calculateValue = calculateExponent(number, 2);
+  displayVlaue = handleExponent(displayValue);
+  calculateValue = handleExponent(displayValue);
 
   updateDisplay();
 }
 
-// ... rest of the existing code ...
+function calculateExponent(base, exponent) {
+  return base ** exponent;
+}
 
-// Add event listeners for both absolute buttons
-document
-  .querySelector("#absolute")
-  .addEventListener("click", calculateAbsolute);
-document
-  .querySelector("#newAbsolute")
-  .addEventListener("click", calculateAbsolute);
+//memory functions
+function memoryAdd() {
+  const display = document.getElementById("#display");
+  try {
+    let expression = display.value.replace(/x/g, "*").replace(/÷/g, "/");
+    const result = eval(expression);
+    memory += result;
+    console.log(`Memory added: ${memory}`); // For debugging
+  } catch (error) {
+    console.error("Error in memoryAdd:", error);
+  }
+}
+
+function memorySubtract() {
+  const display = document.getElementById("#display");
+  try {
+    let expression = display.value.replace(/x/g, "*").replace(/÷/g, "/");
+    const result = eval(expression);
+    memory -= result;
+    console.log(`Memory subtracted: ${memory}`); // For debugging
+  } catch (error) {
+    console.error("Error in memorySubtract:", error);
+  }
+}
+
+function memoryRecall() {
+  const display = document.getElementById("#display");
+  display.value += memory; // Append memory value to display
+  console.log(`Memory recalled: ${memory}`); // For debugging
+}
+
+function memoryClear() {
+  memory = 0;
+  console.log("Memory cleared"); // For debugging
+}
+function calculateSquare() {
+  const displayValue = parseFloat(displayValue);
+  const calculatedResult = Math.pow(displayValue, 2); // Square the number
+  // result.textContent = calculatedResult;
+}

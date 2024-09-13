@@ -10,7 +10,7 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    min-height: 100vh
+    min-height: 100vh;
 }
 
 .dropbtn {
@@ -99,6 +99,8 @@ body {
     width: 100%;
     max-width: 350px;
     background-color: #000;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
 }
 
 .display,
@@ -156,6 +158,8 @@ body {
     /* border-radius: 15px; */
     max-width: 350px;
     overflow: hidden;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
 }
 
 .keys {
@@ -190,8 +194,9 @@ button:active {
 #scientific {
     font-family: Arial, sans-serif;
     background-color: #000000;
-    /* border-radius: 15px; */
     width: 350px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
 
 }
 

@@ -11,13 +11,14 @@
 <body>
     <div class="wrap">
         <div class="display-container">
+            <img src="menu.svg" />
             <div class="display" id="display">0</div>
             <div class="result" id="result"></div>
         </div>
         <div id="calculator">
             <div class="keys">
                 <button onclick="clearDisplay()" class="operator-btn">AC</button>
-                <button id="absolute" onclick="calculateAbsolute()" class="operator-btn">+/-</button>
+                <button id="absolute" class="operator-btn">+/-</button>
                 <button onclick="appendToDisplay('%','1/100')" class="operator-btn">%</button>
                 <button onclick="appendToDisplay('÷','/')" class="operator">÷</button>
                 <button onclick="appendToDisplay('7','7')">7</button>
@@ -56,13 +57,13 @@
                 <div class="second-keys">
                     <button onclick="appendToDisplay('(','(')">(</button>
                     <button onclick=" appendToDisplay(')',')')">)</button>
-                    <button onclick="appendToDisplay('mc','')">mc</button>
-                    <button onclick=" appendToDisplay('m+','')">m+</button>
-                    <button onclick="appendToDisplay('m-','')">m-</button>
-                    <button onclick=" appendToDisplay('mr','')">mr</button>
+                    <button onclick="memoryClear()">mc</button>
+                    <button onclick="memoryAdd()">m+</button>
+                    <button onclick="memorySubtract()">m-</button>
+                    <button onclick="memoryRecall()">mr</button>
 
                     <button onclick="appendToDisplay('2nd','')">2<sup>nd</sup></button>
-                    <button onclick="appendToDisplay('²','x²')">x<sup>2</sup></button>
+                    <button onclick="handleExponent('²')">x<sup>2</sup></button>
                     <button onclick="appendToDisplay('³','x³')">x<sup>3</sup></button>
                     <button onclick="appendToDisplay('xʸ','')">x<sup>y</sup></button>
                     <button onclick="appendToDisplay('eˣ','')">e<sup>x</sup></button>
@@ -79,7 +80,7 @@
                     <button onclick="appendToDisplay('sin','')">sin</button>
                     <button onclick="appendToDisplay('cos', '')">cos</button>
                     <button onclick="appendToDisplay('tan', '')">tan</button>
-                    <button onclick="appendToDisplay('e', '*2.71828183')">e</button>
+                    <button onclick="appendToDisplay('e', '2.71828183*1')">e</button>
                     <button onclick="appendToDisplay('EE', '')">EE</button>
                     <button onclick="appendToDisplay('Rand', '')">Rand</button>
                     <button onclick="appendToDisplay('sinh', '')">sinh</button>
