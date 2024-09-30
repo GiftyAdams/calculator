@@ -7,6 +7,9 @@ let memory = 0;
 function updateDisplay() {
   display.textContent = displayValue;
 }
+// function updateResultDisplay() {
+//   result.textContent = calculateValue;
+// }
 function appendToDisplay(value, actualValue) {
   if (displayValue === "0" && value !== ".") {
     displayValue = value;
@@ -20,9 +23,17 @@ function appendToDisplay(value, actualValue) {
 }
 
 function clearDisplay() {
+  if (displayValue !== "0" || result.textContent !== "") {
+    // Add the current display (calculation) and result to history before clearing
+    addToHistory(displayValue, result.textContent);
+  }
+
+  // Reset the display and result
   displayValue = "0";
-  updateDisplay();
-  resetDisplayPosition();
+  calculateValue = "";
+  result.textContent = "";
+  updateDisplay(); // This updates the main display
+  updateResult(""); // Use updateResult to clear the result
 }
 function toggleSign() {
   displayValue = displayValue.startsWith("-")
@@ -38,6 +49,7 @@ function calculate() {
   display.classList.add("moved");
   result.classList.add("visible");
 }
+
 function resetDisplayPosition() {
   display.classList.remove("moved");
   result.classList.remove("visible");
@@ -148,48 +160,120 @@ function handleExponent(superscript) {
 
   updateDisplay();
 }
+/*building calculator history*/
+// Sample data for demonstration
+let historyData = [
+  // { id: 1, calculation: "6×8", result: "48" },
+  // { id: 2, calculation: "6,000-4,700", result: "1,300" },
+  // { id: 3, calculation: "8-3", result: "5" },
+  // { id: 4, calculation: "50-12.50", result: "37.5" },
+  // { id: 5, calculation: "7!", result: "5,040" },
+  // { id: 6, calculation: "3²", result: "9" },
+  // { id: 7, calculation: "5-9", result: "-4" },
+  // { id: 8, calculation: "4×9", result: "36" },
+  // { id: 9, calculation: "5×5", result: "25" },
+];
 
-function calculateExponent(base, exponent) {
-  return base ** exponent;
+const historyList = document.getElementById("history-list");
+const editButton = document.getElementById("edit-button");
+const menuIcon = document.getElementById("menu-icon");
+function renderHistory() {
+  historyList.innerHTML = ""; // Clear the current history list
+
+  historyData.forEach((item) => {
+    const historyItem = document.createElement("div");
+    historyItem.className = "history-item";
+
+    // Show both the calculation and result in the history
+    historyItem.innerHTML = `
+      <div>
+        <div class="calculation">${item.calculation}</div>
+        <div class="old-result">${item.result}</div>
+      </div>
+      <button class="delete-button" data-id="${item.id}">×</button>
+    `;
+
+    historyList.appendChild(historyItem);
+  });
+  console.log(historyData);
 }
 
-//memory functions
-function memoryAdd() {
-  const display = document.getElementById("#display");
-  try {
-    let expression = display.value.replace(/x/g, "*").replace(/÷/g, "/");
-    const result = eval(expression);
-    memory += result;
-    console.log(`Memory added: ${memory}`); // For debugging
-  } catch (error) {
-    console.error("Error in memoryAdd:", error);
+function toggleEditMode() {
+  historyList.classList.toggle("edit-mode");
+  editButton.textContent = historyList.classList.contains("edit-mode")
+    ? "Done"
+    : "Edit";
+}
+
+function deleteHistoryItem(id) {
+  historyData = historyData.filter((item) => item.id !== id);
+  renderHistory();
+}
+
+// function updateDisplay(value) {
+//   displayValue = value;
+//   display.textContent = displayValue;
+// }
+
+function updateResult(value) {
+  calculateValue = value;
+  result.textContent = calculateValue;
+}
+
+// function addToHistory(calculation, res) {
+//   const newItem = {
+//     id: Date.now(),
+//     calculation: calculation,
+//     result: res,
+//   };
+//   historyData.unshift(newItem);
+//   if (historyData.length > 30) {
+//     historyData.pop();
+//   }
+//   renderHistory();
+// }
+function addToHistory(calculation, res) {
+  const newItem = {
+    id: Date.now(),
+    calculation: calculation,
+    result: res, // Now storing the result too
+  };
+
+  // Add new item to the top of the history
+  historyData.unshift(newItem);
+
+  // Limit history to 30 entries
+  if (historyData.length > 30) {
+    historyData.pop();
   }
-}
 
-function memorySubtract() {
-  const display = document.getElementById("#display");
-  try {
-    let expression = display.value.replace(/x/g, "*").replace(/÷/g, "/");
-    const result = eval(expression);
-    memory -= result;
-    console.log(`Memory subtracted: ${memory}`); // For debugging
-  } catch (error) {
-    console.error("Error in memorySubtract:", error);
+  renderHistory(); // Re-render the updated history
+}
+editButton.addEventListener("click", toggleEditMode);
+
+historyList.addEventListener("click", (e) => {
+  if (e.target.classList.contains("delete-button")) {
+    const id = parseInt(e.target.getAttribute("data-id"));
+    deleteHistoryItem(id);
   }
+});
+
+// Example of how to use the new functions
+// This would typically be called after a calculation is performed
+function performCalculation(calculation) {
+  let res;
+  try {
+    res = eval(calculation); // Note: eval is used for simplicity, but it's not recommended for production use
+  } catch (error) {
+    res = "Error";
+  }
+  updateDisplay(calculation);
+  updateResult(res);
+  addToHistory(calculation, res);
 }
 
-function memoryRecall() {
-  const display = document.getElementById("#display");
-  display.value += memory; // Append memory value to display
-  console.log(`Memory recalled: ${memory}`); // For debugging
-}
+// Initial render
+renderHistory();
 
-function memoryClear() {
-  memory = 0;
-  console.log("Memory cleared"); // For debugging
-}
-function calculateSquare() {
-  const displayValue = parseFloat(displayValue);
-  const calculatedResult = Math.pow(displayValue, 2); // Square the number
-  // result.textContent = calculatedResult;
-}
+// Example usage (you would replace this with actual calculator logic)
+// performCalculation("5+5");
