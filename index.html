@@ -11,8 +11,8 @@
 <body>
     <div id="calculator-container">
         <div id="calculator-history">
-            <div class="header">
-                <span class="menu-icon" id="menu-icon">☰</span>
+            <div id="relative" class="header">
+                <span onclick="closeDrawer()" class="menu-icon" id="menu-icon">☰</span>
                 <button class="edit-button" id="edit-button">Edit</button>
             </div>
             <h2>Previous 30 Days</h2>
@@ -20,13 +20,16 @@
             <div id="history-list">
                 <!-- History items will be dynamically added here -->
             </div>
+            <footer id="history-footer">
+                <button id="delete-all-button">Delete All</button>
+            </footer>
         </div>
 
-
+        <div id="backdrop" class="backdrop"></div>
 
         <div class="wrap">
             <div class="display-container">
-                <img src="menu.svg" />
+                <img onclick="showDrawer()" src="menu.svg" />
                 <div class="display" id="display">0</div>
                 <div class="result" id="result"></div>
             </div>

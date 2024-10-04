@@ -7,9 +7,9 @@ let memory = 0;
 function updateDisplay() {
   display.textContent = displayValue;
 }
-// function updateResultDisplay() {
-//   result.textContent = calculateValue;
-// }
+function updateResultDisplay() {
+  result.textContent = calculateValue;
+}
 function appendToDisplay(value, actualValue) {
   if (displayValue === "0" && value !== ".") {
     displayValue = value;
@@ -29,11 +29,11 @@ function clearDisplay() {
   }
 
   // Reset the display and result
-  displayValue = "0";
+  displayValue = "";
   calculateValue = "";
-  result.textContent = "";
+  result.textContent = "0";
   updateDisplay(); // This updates the main display
-  updateResult(""); // Use updateResult to clear the result
+  updateResult("0"); // Use updateResult to clear the result
 }
 function toggleSign() {
   displayValue = displayValue.startsWith("-")
@@ -174,8 +174,8 @@ let historyData = [
   // { id: 9, calculation: "5×5", result: "25" },
 ];
 
-const historyList = document.getElementById("history-list");
 const editButton = document.getElementById("edit-button");
+const historyList = document.getElementById("history-list");
 const menuIcon = document.getElementById("menu-icon");
 function renderHistory() {
   historyList.innerHTML = ""; // Clear the current history list
@@ -186,16 +186,33 @@ function renderHistory() {
 
     // Show both the calculation and result in the history
     historyItem.innerHTML = `
-      <div>
-        <div class="calculation">${item.calculation}</div>
-        <div class="old-result">${item.result}</div>
-      </div>
+      <div style="display:flex; flex-direction:row; align-items:center;">
       <button class="delete-button" data-id="${item.id}">×</button>
+        <div><div class="calculation">${item.calculation}</div>
+        <div class="old-result">${item.result}</div>
+        </div>
+      </div>
     `;
 
     historyList.appendChild(historyItem);
   });
   console.log(historyData);
+}
+
+function deleteAllHistory() {
+  historyData = []; // Clear the history array
+  localStorage.removeItem("calculatorHistory"); // Remove from local storage
+  renderHistory(); // Update the displayed history
+}
+document
+  .getElementById("delete-all-button")
+  .addEventListener("click", deleteAllHistory);
+function loadHistoryFromLocalStorage() {
+  const storedHistory = localStorage.getItem("calculatorHistory");
+  if (storedHistory) {
+    historyData = JSON.parse(storedHistory);
+    renderHistory();
+  }
 }
 
 function toggleEditMode() {
@@ -210,28 +227,11 @@ function deleteHistoryItem(id) {
   renderHistory();
 }
 
-// function updateDisplay(value) {
-//   displayValue = value;
-//   display.textContent = displayValue;
-// }
-
 function updateResult(value) {
   calculateValue = value;
   result.textContent = calculateValue;
 }
 
-// function addToHistory(calculation, res) {
-//   const newItem = {
-//     id: Date.now(),
-//     calculation: calculation,
-//     result: res,
-//   };
-//   historyData.unshift(newItem);
-//   if (historyData.length > 30) {
-//     historyData.pop();
-//   }
-//   renderHistory();
-// }
 function addToHistory(calculation, res) {
   const newItem = {
     id: Date.now(),
@@ -274,6 +274,3 @@ function performCalculation(calculation) {
 
 // Initial render
 renderHistory();
-
-// Example usage (you would replace this with actual calculator logic)
-// performCalculation("5+5");
