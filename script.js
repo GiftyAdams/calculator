@@ -2,46 +2,52 @@ let displayValue = "0";
 let calculateValue = "";
 const display = document.querySelector("#display");
 const result = document.querySelector("#result");
-let memory = 0;
+const MAX_DISPLAY_LENGTH = 21;
 
 function updateDisplay() {
   display.textContent = displayValue;
 }
-function updateResultDisplay() {
-  result.textContent = calculateValue;
-}
 function appendToDisplay(value, actualValue) {
-  if (displayValue === "0" && value !== ".") {
-    displayValue = value;
-    calculateValue = actualValue;
+  // Check if we are at the maximum length and prevent further input
+  if (displayValue.length < MAX_DISPLAY_LENGTH) {
+    if (displayValue === "0" && value !== ".") {
+      displayValue = value;
+      calculateValue = actualValue;
+    } else {
+      displayValue += value;
+      calculateValue += actualValue;
+    }
+    updateDisplay();
+    resetDisplayPosition();
   } else {
-    displayValue += value;
-    calculateValue += actualValue;
+    // Optionally, you could alert the user or log a message if they hit the limit
+    console.log("Maximum input length reached.");
   }
-  updateDisplay();
-  resetDisplayPosition();
 }
-
 function clearDisplay() {
+  // Add the current display (calculation) and result to history before clearing
   if (displayValue !== "0" || result.textContent !== "") {
-    // Add the current display (calculation) and result to history before clearing
     addToHistory(displayValue, result.textContent);
   }
 
-  // Reset the display and result
-  displayValue = "";
-  calculateValue = "";
-  result.textContent = "0";
-  updateDisplay(); // This updates the main display
-  updateResult("0"); // Use updateResult to clear the result
-}
-function toggleSign() {
-  displayValue = displayValue.startsWith("-")
-    ? displayValue.slice(1)
-    : "-" + displayValue;
-  updateDisplay();
-}
+  // Remove the last character from displayValue
+  if (displayValue.length > 1) {
+    displayValue = displayValue.slice(0, -1); // Remove the last character
+  } else {
+    displayValue = "0"; // If only one character, reset to "0"
+  }
 
+  // Reset calculateValue accordingly
+  calculateValue = ""; // Resetting this if necessary, else you can keep it if you want to retain previous calculations
+
+  // Update the result display and main display
+  result.textContent = ""; // Clear the result
+  updateDisplay(); // This updates the main display
+
+  // Ensure display resets to original position with zero displayed
+  display.classList.remove("moved");
+  result.classList.remove("visible");
+}
 function calculate() {
   // try {
   let calculatedResult = eval(calculateValue).toString();
@@ -54,19 +60,32 @@ function resetDisplayPosition() {
   display.classList.remove("moved");
   result.classList.remove("visible");
 }
-
-//Adding an event lister for "Enter" key
+// Adding an event listener for "Enter" key
 document.addEventListener("keydown", function (event) {
   if (event.key === "Enter") {
-    calculate();
+    event.preventDefault(); // Prevent default action (like form submission)
+    calculate(); // Call the calculate function
+  }
+});
+// Adding an event listener for the "Escape" key
+document.addEventListener("keydown", function (event) {
+  if (event.key === "Escape") {
+    clearAll(); // Call a new function to clear everything
   }
 });
 
-document.addEventListener("keydown", function (event) {
-  if (event.key === "Escape") {
-    display.value = "";
-  }
-});
+function clearAll() {
+  displayValue = "0"; // Reset display value
+  calculateValue = ""; // Reset calculation value
+  result.textContent = ""; // Clear result display
+  updateDisplay(); // Update the display to show "0"
+  resetDisplayPosition(); // Reset the display position if necessary
+}
+// document.addEventListener("keydown", function (event) {
+//   if (event.key === "Escape") {
+//     display.value = "";
+//   }
+// });
 
 // document.addEventListener("click", function () {
 //   display.focus();
@@ -92,7 +111,7 @@ dropbutton.addEventListener("click", function () {
     dropupcontent.style.display = "block";
   }
 });
-document.addEventListener("click", function (event) {
+dropupcontent.addEventListener("click", function (event) {
   if (
     !dropbutton.contains(event.target) &&
     !dropupcontent.contains(event.target)
@@ -112,7 +131,7 @@ dropbtn.addEventListener("click", function () {
     dropcontent.style.display = "block";
   }
 });
-document.addEventListener("click", function (event) {
+dropcontent.addEventListener("click", function (event) {
   if (!dropbtn.contains(event.target) && !dropcontent.contains(event.target)) {
     dropcontent.style.display = "none";
   }
@@ -274,3 +293,20 @@ function performCalculation(calculation) {
 
 // Initial render
 renderHistory();
+function showDrawer() {
+  const drawer = document.getElementById("calculator-history");
+
+  // Apply styles specifically to the calculator history drawer
+  drawer.style.width = "90%";
+  drawer.style.paddingLeft = "5px";
+  drawer.style.paddingRight = "5px";
+  drawer.style.right = "0"; // Ensure it slides in from the right if needed
+}
+
+function closeDrawer() {
+  const drawer = document.getElementById("calculator-history");
+
+  // Close the drawer by setting width and padding to 0
+  drawer.style.width = "0";
+  drawer.style.padding = "0";
+}
