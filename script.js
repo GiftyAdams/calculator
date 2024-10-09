@@ -29,21 +29,24 @@ let calculationDone = false; // Flag to check if the calculation is done
 function clearDisplay() {
   // Check if a calculation has just been completed
   if (calculationDone) {
-    // Reset everything to default values
-    displayValue = "0"; // Reset display value
-    calculateValue = ""; // Reset calculation value
-    // result.textContent = ""; // Clear result display
-    // updateDisplay(); // Update the display to show "0"
-
-    // Reset the flag for the next input
-    calculationDone = false;
-  } else {
     // Add the current display (calculation) and result to history before clearing
     if (displayValue !== "0" || result.textContent !== "") {
       addToHistory(displayValue, result.textContent);
     }
 
-    // Remove the last character from displayValue when typing
+    // Reset everything to default values
+    displayValue = "0"; // Reset display value to default zero
+    calculateValue = ""; // Reset calculation value
+    result.textContent = ""; // Clear result display
+
+    // Update the display to show "0" at its default position
+    updateDisplay(); // Ensure display shows "0"
+    resetDisplayPosition(); // Make sure display resets its position
+
+    // Reset the flag for the next input
+    calculationDone = false; // Ready for the next calculation
+  } else {
+    // When typing, remove the last character from displayValue
     if (displayValue.length > 1) {
       displayValue = displayValue.slice(0, -1); // Remove the last character
     } else {
@@ -55,8 +58,7 @@ function clearDisplay() {
     updateDisplay(); // This updates the main display
 
     // Ensure display resets to original position with zero displayed
-    display.classList.remove("moved");
-    result.classList.remove("visible");
+    resetDisplayPosition(); // Make sure display resets its position
   }
 }
 
@@ -171,7 +173,7 @@ dropbutton.addEventListener("click", function () {
     dropupcontent.style.display = "block";
   }
 });
-dropupcontent.addEventListener("click", function (event) {
+document.addEventListener("click", function (event) {
   if (
     !dropbutton.contains(event.target) &&
     !dropupcontent.contains(event.target)
@@ -191,7 +193,7 @@ dropbtn.addEventListener("click", function () {
     dropcontent.style.display = "block";
   }
 });
-dropcontent.addEventListener("click", function (event) {
+document.addEventListener("click", function (event) {
   if (!dropbtn.contains(event.target) && !dropcontent.contains(event.target)) {
     dropcontent.style.display = "none";
   }
