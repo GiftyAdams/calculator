@@ -24,8 +24,6 @@ function appendToDisplay(value, actualValue) {
     console.log("Maximum input length reached.");
   }
 }
-let calculationDone = false; // Flag to check if the calculation is done
-
 function clearDisplay() {
   // Check if a calculation has just been completed
   if (calculationDone) {
@@ -62,7 +60,6 @@ function clearDisplay() {
   }
 }
 
-// Modify the calculate function to set the flag when the calculation is done
 function calculate() {
   try {
     let calculatedResult = eval(calculateValue).toString();
@@ -81,38 +78,6 @@ function calculate() {
     updateDisplay();
   }
 }
-
-// function clearDisplay() {
-//   // Add the current display (calculation) and result to history before clearing
-//   if (displayValue !== "0" || result.textContent !== "") {
-//     addToHistory(displayValue, result.textContent);
-//   }
-
-//   // Remove the last character from displayValue
-//   if (displayValue.length > 1) {
-//     displayValue = displayValue.slice(0, -1); // Remove the last character
-//   } else {
-//     displayValue = "0"; // If only one character, reset to "0"
-//   }
-
-//   // Reset calculateValue accordingly
-//   calculateValue = ""; // Resetting this if necessary, else you can keep it if you want to retain previous calculations
-
-//   // Update the result display and main display
-//   result.textContent = ""; // Clear the result
-//   updateDisplay(); // This updates the main display
-
-//   // Ensure display resets to original position with zero displayed
-//   display.classList.remove("moved");
-//   result.classList.remove("visible");
-// }
-// function calculate() {
-//   // try {
-//   let calculatedResult = eval(calculateValue).toString();
-//   result.textContent = calculatedResult;
-//   display.classList.add("moved");
-//   result.classList.add("visible");
-// }
 
 function resetDisplayPosition() {
   display.classList.remove("moved");
@@ -232,6 +197,25 @@ document.querySelector("#absolute").addEventListener("click", function () {
   console.log(displayValue, calculateValue);
   updateDisplay();
 });
+let isNegative = false; // To track if the number is negated
+
+function calculateAbsolute() {
+  // Check if there's a valid number in the display
+  if (displayValue !== "0") {
+    if (isNegative) {
+      // If the number is negative and in brackets, return it to its original form
+      displayValue = displayValue.slice(2, -1); // Remove the enclosing brackets and negative sign
+      isNegative = false; // Reset the flag
+    } else {
+      // If the number is positive, negate it and enclose it in brackets
+      displayValue = `(-${displayValue})`;
+      isNegative = true; // Set the flag to indicate it's now negative
+    }
+  }
+
+  // Update the display with the new value
+  updateDisplay();
+}
 
 function handleExponent(superscript) {
   let number = parseFloat(displayValue);
