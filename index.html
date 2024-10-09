@@ -31,8 +31,9 @@
         <div class="wrap">
             <div class="display-container">
                 <img onclick="showDrawer()" src="menu.svg" />
-                <div class="display" id="display">0</div>
+                <div class="display" id="display" tabindex="0">0</div>
                 <div class="result" id="result"></div>
+                <div id="radDisplay"></div>
             </div>
             <div id="calculator">
                 <div class="keys">
@@ -58,7 +59,8 @@
                     <div class="dropup">
                         <button class="dropbutton"><img src="calculator.svg" width="20px"></button>
                         <div class="dropupcontent">
-                            <a onclick="secondSwitchDisplay()"><img src="plusmindiv.svg" width="10%">Basic</a>
+                            <a onclick="secondSwitchDisplay()" style="color: #ff9500;"><img src="plusmindiv.svg"
+                                    width="50px" style="vertical-align: middle;">Basic</a>
                             <a onclick="switchDisplay()"><em>f(x)</em>Scientific</a>
                         </div>
                     </div>
@@ -81,32 +83,32 @@
                         <button onclick="memorySubtract()">m-</button>
                         <button onclick="memoryRecall()">mr</button>
 
-                        <button onclick="appendToDisplay('2nd','')">2<sup>nd</sup></button>
+                        <button id="secondBtn" onclick="toggleButtons()">2<sup>nd</sup></button>
                         <button onclick="handleExponent('²')">x<sup>2</sup></button>
                         <button onclick="appendToDisplay('³','x³')">x<sup>3</sup></button>
                         <button onclick="appendToDisplay('xʸ','')">x<sup>y</sup></button>
-                        <button onclick="appendToDisplay('eˣ','')">e<sup>x</sup></button>
-                        <button onclick="appendToDisplay('10ˣ','')">10<sup>x</sup></button>
+                        <button id="btn1" onclick="appendToDisplay('eˣ','')">e<sup>x</sup></button>
+                        <button id="btn2" onclick="appendToDisplay('10ˣ','')">10<sup>x</sup></button>
 
                         <button onclick="appendToDisplay('(1÷0)','1/x')">1/x</button>
                         <button onclick="appendToDisplay('²√x','')">²√x</button>
                         <button onclick="appendToDisplay('³√x','')">³√x</button>
                         <button onclick="appendToDisplay('ʸ√x', '')">ʸ√x</button>
-                        <button onclick="appendToDisplay('ln','')">ln</button>
-                        <button onclick="appendToDisplay('log₁₀', '')">log<sub>10</sub></button>
+                        <button id="btn3" onclick="appendToDisplay('ln','')">ln</button>
+                        <button id="btn4" onclick="appendToDisplay('log₁₀', '')">log<sub>10</sub></button>
 
                         <button onclick="appendToDisplay('x!', '')">x!</button>
-                        <button onclick="appendToDisplay('sin','')">sin</button>
-                        <button onclick="appendToDisplay('cos', '')">cos</button>
-                        <button onclick="appendToDisplay('tan', '')">tan</button>
+                        <button id="btn5" onclick="appendToDisplay('sin','')">sin</button>
+                        <button id="btn6" onclick="appendToDisplay('cos', '')">cos</button>
+                        <button id="btn7" onclick="appendToDisplay('tan', '')">tan</button>
                         <button onclick="appendToDisplay('e', '2.71828183*1')">e</button>
                         <button onclick="appendToDisplay('EE', '')">EE</button>
                         <button onclick="appendToDisplay('Rand', '')">Rand</button>
-                        <button onclick="appendToDisplay('sinh', '')">sinh</button>
-                        <button onclick="appendToDisplay('cosh','')">cosh</button>
-                        <button onclick="appendToDisplay('tanh', '')">tanh</button>
+                        <button id="btn8" onclick="appendToDisplay('sinh', '')">sinh</button>
+                        <button id="btn9" onclick="appendToDisplay('cosh','')">cosh</button>
+                        <button id="btn10" onclick="appendToDisplay('tanh', '')">tanh</button>
                         <button onclick="appendToDisplay('𝜋', '22/7')" class="piButton">𝜋</button>
-                        <button onclick="appendToDisplay('Deg','')">Deg</button>
+                        <button id="degButton" onclick="toggleDegRad()">Deg</button>
                     </div>
                 </div>
 
@@ -133,8 +135,9 @@
                     <div class="drop">
                         <button class="dropbtn"><img src="calculator.svg" width="20px"></button>
                         <div class="dropcontent">
-                            <a onclick="secondSwitchDisplay()"><img src="plusmindiv.svg" width="20px">Basic</a>
-                            <a onclick="switchDisplay()"><em>f(x)</em>Scientific</a>
+                            <a onclick="secondSwitchDisplay()"><img src="plusmindiv.svg" width="35px"
+                                    style="vertical-align: middle;">Basic</a>
+                            <a onclick="switchDisplay()" style="color: #ff9500;"><em>f(x)</em>Scientific</a>
                         </div>
                     </div>
                     <button onclick="appendToDisplay('0')">0</button>

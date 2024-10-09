@@ -1,3 +1,100 @@
+// let displayValue = "0";
+// let calculateValue = "";
+// const display = document.querySelector("#display");
+// const result = document.querySelector("#result");
+// const MAX_DISPLAY_LENGTH = 21;
+
+// function updateDisplay() {
+//   display.textContent = displayValue;
+// }
+// function appendToDisplay(value, actualValue) {
+//   // Check if we are at the maximum length and prevent further input
+//   if (displayValue.length < MAX_DISPLAY_LENGTH) {
+//     if (displayValue === "0" && value !== ".") {
+//       displayValue = value;
+//       calculateValue = actualValue;
+//     } else {
+//       displayValue += value;
+//       calculateValue += actualValue;
+//     }
+//     updateDisplay();
+//     resetDisplayPosition();
+//   } else {
+//     // Optionally, you could alert the user or log a message if they hit the limit
+//     console.log("Maximum input length reached.");
+//   }
+// }
+// function clearDisplay() {
+//   // Add the current display (calculation) and result to history before clearing
+//   if (displayValue !== "0" || result.textContent !== "") {
+//     addToHistory(displayValue, result.textContent);
+//   }
+
+//   // Remove the last character from displayValue
+//   if (displayValue.length > 1) {
+//     displayValue = displayValue.slice(0, -1); // Remove the last character
+//   } else {
+//     displayValue = "0"; // If only one character, reset to "0"
+//   }
+
+//   // Reset calculateValue accordingly
+//   calculateValue = ""; // Resetting this if necessary, else you can keep it if you want to retain previous calculations
+
+//   // Update the result display and main display
+//   result.textContent = ""; // Clear the result
+//   updateDisplay(); // This updates the main display
+
+//   // Ensure display resets to original position with zero displayed
+//   display.classList.remove("moved");
+//   result.classList.remove("visible");
+// }
+// function calculate() {
+//   // try {
+//   let calculatedResult = eval(calculateValue).toString();
+//   result.textContent = calculatedResult;
+//   display.classList.add("moved");
+//   result.classList.add("visible");
+// }
+
+// function resetDisplayPosition() {
+//   display.classList.remove("moved");
+//   result.classList.remove("visible");
+// }
+// // Adding an event listener for "Enter" key
+// document.addEventListener("keydown", function (event) {
+//   if (event.key === "Enter") {
+//     event.preventDefault(); // Prevent default action (like form submission)
+//     calculate(); // Call the calculate function
+//   }
+// });
+// // Adding an event listener for the "Escape" key
+// document.addEventListener("keydown", function (event) {
+//   if (event.key === "Escape") {
+//     clearAll(); // Call a new function to clear everything
+//   }
+// });
+// function clearAll() {
+//   displayValue = "0"; // Reset display value
+//   calculateValue = ""; // Reset calculation value
+//   result.textContent = ""; // Clear result display
+//   updateDisplay(); // Update the display to show "0"
+//   resetDisplayPosition(); // Reset the display position if necessary
+// }
+// // Keyboard event listener for input
+// document.addEventListener("keydown", function (event) {
+//   const key = event.key;
+
+//   // Allow numbers and operators only
+//   if (/^[0-9]$/.test(key) || /^[+\-*/]$/.test(key)) {
+//     appendToDisplay(key);
+//   } else if (key === "Enter") {
+//     // Calculate result if Enter is pressed
+//     calculate();
+//   } else if (key === "Escape") {
+//     // Clear display if Escape is pressed
+//     clearDisplay();
+//   }
+// });
 let displayValue = "0";
 let calculateValue = "";
 const display = document.querySelector("#display");
@@ -7,29 +104,25 @@ const MAX_DISPLAY_LENGTH = 21;
 function updateDisplay() {
   display.textContent = displayValue;
 }
-function appendToDisplay(value, actualValue) {
+
+function appendToDisplay(value) {
   // Check if we are at the maximum length and prevent further input
   if (displayValue.length < MAX_DISPLAY_LENGTH) {
     if (displayValue === "0" && value !== ".") {
-      displayValue = value;
-      calculateValue = actualValue;
+      displayValue = value; // Update display value
+      calculateValue = value; // Start new calculation
     } else {
-      displayValue += value;
-      calculateValue += actualValue;
+      displayValue += value; // Append to display
+      calculateValue += value; // Append to calculation value
     }
     updateDisplay();
     resetDisplayPosition();
   } else {
-    // Optionally, you could alert the user or log a message if they hit the limit
     console.log("Maximum input length reached.");
   }
 }
-function clearDisplay() {
-  // Add the current display (calculation) and result to history before clearing
-  if (displayValue !== "0" || result.textContent !== "") {
-    addToHistory(displayValue, result.textContent);
-  }
 
+function clearDisplay() {
   // Remove the last character from displayValue
   if (displayValue.length > 1) {
     displayValue = displayValue.slice(0, -1); // Remove the last character
@@ -37,29 +130,32 @@ function clearDisplay() {
     displayValue = "0"; // If only one character, reset to "0"
   }
 
-  // Reset calculateValue accordingly
-  calculateValue = ""; // Resetting this if necessary, else you can keep it if you want to retain previous calculations
-
   // Update the result display and main display
   result.textContent = ""; // Clear the result
   updateDisplay(); // This updates the main display
-
-  // Ensure display resets to original position with zero displayed
-  display.classList.remove("moved");
-  result.classList.remove("visible");
+  resetDisplayPosition(); // Reset the display position if necessary
 }
+// Adding an event listener for the Escape key
+
 function calculate() {
-  // try {
-  let calculatedResult = eval(calculateValue).toString();
-  result.textContent = calculatedResult;
-  display.classList.add("moved");
-  result.classList.add("visible");
+  try {
+    let calculatedResult = eval(calculateValue).toString();
+    if (calculatedResult === "Infinity" || isNaN(calculatedResult)) {
+      throw new Error("Invalid calculation");
+    }
+    result.textContent = calculatedResult; // Display the result
+    display.classList.add("moved");
+    result.classList.add("visible");
+  } catch (error) {
+    result.textContent = "Error"; // Show error if calculation fails
+  }
 }
 
 function resetDisplayPosition() {
   display.classList.remove("moved");
   result.classList.remove("visible");
 }
+
 // Adding an event listener for "Enter" key
 document.addEventListener("keydown", function (event) {
   if (event.key === "Enter") {
@@ -67,6 +163,7 @@ document.addEventListener("keydown", function (event) {
     calculate(); // Call the calculate function
   }
 });
+
 // Adding an event listener for the "Escape" key
 document.addEventListener("keydown", function (event) {
   if (event.key === "Escape") {
@@ -81,16 +178,24 @@ function clearAll() {
   updateDisplay(); // Update the display to show "0"
   resetDisplayPosition(); // Reset the display position if necessary
 }
-// document.addEventListener("keydown", function (event) {
-//   if (event.key === "Escape") {
-//     display.value = "";
-//   }
-// });
 
-// document.addEventListener("click", function () {
-//   display.focus();
-// });
+// Keyboard event listener for input
+document.addEventListener("keydown", function (event) {
+  const key = event.key;
 
+  // Allow numbers and operators only
+  if (/^[0-9]$/.test(key) || /^[+\-*/]$/.test(key)) {
+    appendToDisplay(key);
+  }
+});
+// Adding an event listener for the Escape key and Backspace key
+document.addEventListener("keydown", function (event) {
+  if (event.key === "Escape") {
+    clearDisplay(); // Call clearDisplay when Escape key is pressed
+  } else if (event.key === "Backspace") {
+    clearDisplay(); // Call clearDisplay when Backspace key is pressed
+  }
+});
 function switchDisplay() {
   document.querySelector("#scientific").style.display = "block";
   document.querySelector("#calculator").style.display = "none";
@@ -111,7 +216,7 @@ dropbutton.addEventListener("click", function () {
     dropupcontent.style.display = "block";
   }
 });
-dropupcontent.addEventListener("click", function (event) {
+document.addEventListener("click", function (event) {
   if (
     !dropbutton.contains(event.target) &&
     !dropupcontent.contains(event.target)
@@ -131,7 +236,7 @@ dropbtn.addEventListener("click", function () {
     dropcontent.style.display = "block";
   }
 });
-dropcontent.addEventListener("click", function (event) {
+document.addEventListener("click", function (event) {
   if (!dropbtn.contains(event.target) && !dropcontent.contains(event.target)) {
     dropcontent.style.display = "none";
   }
@@ -309,4 +414,48 @@ function closeDrawer() {
   // Close the drawer by setting width and padding to 0
   drawer.style.width = "0";
   drawer.style.padding = "0";
+}
+//toggle 2nd button
+let secondMode = false; // Track the state of the toggle
+
+function toggleButtons() {
+  const btn1 = document.getElementById("btn1");
+  const btn2 = document.getElementById("btn2");
+  const btn3 = document.getElementById("btn3");
+  const btn4 = document.getElementById("btn4");
+  const btn5 = document.getElementById("btn5");
+  const btn6 = document.getElementById("btn6");
+  const btn7 = document.getElementById("btn7");
+  const btn8 = document.getElementById("btn8");
+  const btn9 = document.getElementById("btn9");
+  const btn10 = document.getElementById("btn10");
+
+  if (!secondMode) {
+    // Change the button content when "2nd" is pressed
+    btn1.textContent = "yˣ";
+    btn2.textContent = "2ˣ";
+    btn3.textContent = "logᵧ";
+    btn4.textContent = "log₂";
+    btn5.textContent = "sin⁻¹";
+    btn6.textContent = "cos⁻¹";
+    btn7.textContent = "tan⁻¹";
+    btn8.textContent = "sinh⁻¹";
+    btn9.textContent = "cosh⁻¹";
+    btn10.textContent = "tanh⁻¹";
+  } else {
+    // Revert to the original content
+    btn1.textContent = "eˣ";
+    btn2.textContent = "10ˣ";
+    btn3.textContent = "ln";
+    btn4.textContent = "log₁₀";
+    btn5.textContent = "sin";
+    btn6.textContent = "cos";
+    btn7.textContent = "tan";
+    btn8.textContent = "sinh";
+    btn9.textContent = "cosh";
+    btn10.textContent = "tanh";
+  }
+
+  // Toggle the mode
+  secondMode = !secondMode;
 }

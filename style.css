@@ -90,6 +90,7 @@ body {
     font-size: 16px;
     cursor: pointer;
     height: 20px;
+    outline: none;
 }
 
 .edit-button:hover {
@@ -146,6 +147,7 @@ h2 {
     cursor: pointer;
     width: 20px;
     height: 10px;
+    outline: none;
 }
 
 .delete-button:hover {
@@ -196,6 +198,10 @@ h2 {
     align-items: center;
 }
 
+/* .change {
+    color: #ff9500;
+} */
+
 .dropup {
     position: relative;
     display: inline-block;
@@ -213,10 +219,18 @@ h2 {
 
 .dropupcontent a {
     color: white;
-    padding: 12px 10px;
+    padding: 5px 0 10px 0;
     text-decoration: none;
     display: block;
     cursor: pointer;
+}
+
+.dropupcontent a>em {
+    padding: 10px;
+}
+
+.dropupcontent a>img {
+    padding: 15px;
 }
 
 .dropcontent {
@@ -224,7 +238,7 @@ h2 {
     position: absolute;
     background-color: rgb(46, 45, 45);
     min-width: 130px;
-    bottom: 70px;
+    bottom: 40px;
     z-index: 1;
     border-radius: 10px;
 }
@@ -235,6 +249,14 @@ h2 {
     text-decoration: none;
     display: block;
     cursor: pointer;
+}
+
+.dropcontent a>img {
+    padding-right: 15px;
+}
+
+.dropcontent a>em {
+    padding-right: 10px;
 }
 
 .dropup:hover .dropbtn {
@@ -248,6 +270,7 @@ h2 {
 
 .operator-btn {
     background-color: #5c5c5e;
+    outline: none;
 }
 
 .operator {
@@ -263,7 +286,23 @@ h2 {
     background-color: rgb(250, 175, 76);
 }
 
-.display-container {
+#radDisplay {
+    position: absolute;
+    bottom: 10px;
+    left: 0;
+    /* Adjust to position Rad to the left */
+    visibility: hidden;
+    /* Initially hidden */
+    font-size: 14px;
+    /* Adjust font size as necessary */
+}
+
+/* .display-container {
+    position: relative;
+    height: 50px; /* Adjust as needed for your display area */
+}
+
+*/ .display-container {
     position: relative;
     height: 80px;
     width: 100%;
@@ -321,6 +360,7 @@ h2 {
     padding: 10px 7px 10px 15px;
     margin-top: 15px;
     margin-bottom: 2px;
+    outline: none;
 }
 
 button {
@@ -332,6 +372,7 @@ button {
     background-color: #2a2a2c;
     font-size: 1.5rem;
     cursor: pointer;
+    outline: none;
 }
 
 button:hover {
@@ -404,6 +445,7 @@ button:active {
     width: 100%;
     padding-top: 5px;
     background-color: 1c1c1c;
+    outline: none;
     /* font-size: 1rem; */
 }
 
@@ -418,6 +460,7 @@ button:active {
     text-align: center;
     align-items: center;
     gap: 3px;
+    outline: none;
 }
 
 .switched-keys {
@@ -428,6 +471,7 @@ button:active {
     padding: 5px 7px 5px 7px;
     border-bottom-left-radius: 20px;
     border-bottom-right-radius: 20px;
+    outline: none;
 }
 
 .switched-keys>button {
@@ -440,4 +484,5 @@ button:active {
     cursor: pointer;
     text-align: center;
     align-items: center;
+    outline: none;
 }
