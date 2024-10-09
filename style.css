@@ -243,6 +243,15 @@ h2 {
     border-radius: 10px;
 }
 
+.raddisplay {
+    position: absolute;
+    color: white;
+    bottom: 0;
+    left: 0;
+    padding-left: 5px;
+    font-size: smaller;
+}
+
 .dropcontent a {
     color: white;
     padding: 12px 10px;
@@ -286,23 +295,7 @@ h2 {
     background-color: rgb(250, 175, 76);
 }
 
-#radDisplay {
-    position: absolute;
-    bottom: 10px;
-    left: 0;
-    /* Adjust to position Rad to the left */
-    visibility: hidden;
-    /* Initially hidden */
-    font-size: 14px;
-    /* Adjust font size as necessary */
-}
-
-/* .display-container {
-    position: relative;
-    height: 50px; /* Adjust as needed for your display area */
-}
-
-*/ .display-container {
+.display-container {
     position: relative;
     height: 80px;
     width: 100%;

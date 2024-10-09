@@ -1,29 +1,85 @@
-// let displayValue = "0";
-// let calculateValue = "";
-// const display = document.querySelector("#display");
-// const result = document.querySelector("#result");
-// const MAX_DISPLAY_LENGTH = 21;
+let displayValue = "0";
+let calculateValue = "";
+const display = document.querySelector("#display");
+const result = document.querySelector("#result");
+const MAX_DISPLAY_LENGTH = 21;
 
-// function updateDisplay() {
-//   display.textContent = displayValue;
-// }
-// function appendToDisplay(value, actualValue) {
-//   // Check if we are at the maximum length and prevent further input
-//   if (displayValue.length < MAX_DISPLAY_LENGTH) {
-//     if (displayValue === "0" && value !== ".") {
-//       displayValue = value;
-//       calculateValue = actualValue;
-//     } else {
-//       displayValue += value;
-//       calculateValue += actualValue;
-//     }
-//     updateDisplay();
-//     resetDisplayPosition();
-//   } else {
-//     // Optionally, you could alert the user or log a message if they hit the limit
-//     console.log("Maximum input length reached.");
-//   }
-// }
+function updateDisplay() {
+  display.textContent = displayValue;
+}
+function appendToDisplay(value, actualValue) {
+  // Check if we are at the maximum length and prevent further input
+  if (displayValue.length < MAX_DISPLAY_LENGTH) {
+    if (displayValue === "0" && value !== ".") {
+      displayValue = value;
+      calculateValue = actualValue;
+    } else {
+      displayValue += value;
+      calculateValue += actualValue;
+    }
+    updateDisplay();
+    resetDisplayPosition();
+  } else {
+    // Optionally, you could alert the user or log a message if they hit the limit
+    console.log("Maximum input length reached.");
+  }
+}
+let calculationDone = false; // Flag to check if the calculation is done
+
+function clearDisplay() {
+  // Check if a calculation has just been completed
+  if (calculationDone) {
+    // Reset everything to default values
+    displayValue = "0"; // Reset display value
+    calculateValue = ""; // Reset calculation value
+    // result.textContent = ""; // Clear result display
+    // updateDisplay(); // Update the display to show "0"
+
+    // Reset the flag for the next input
+    calculationDone = false;
+  } else {
+    // Add the current display (calculation) and result to history before clearing
+    if (displayValue !== "0" || result.textContent !== "") {
+      addToHistory(displayValue, result.textContent);
+    }
+
+    // Remove the last character from displayValue when typing
+    if (displayValue.length > 1) {
+      displayValue = displayValue.slice(0, -1); // Remove the last character
+    } else {
+      displayValue = "0"; // If only one character, reset to "0"
+    }
+
+    // Update the result display and main display
+    result.textContent = ""; // Clear the result
+    updateDisplay(); // This updates the main display
+
+    // Ensure display resets to original position with zero displayed
+    display.classList.remove("moved");
+    result.classList.remove("visible");
+  }
+}
+
+// Modify the calculate function to set the flag when the calculation is done
+function calculate() {
+  try {
+    let calculatedResult = eval(calculateValue).toString();
+    if (calculatedResult === "Infinity" || isNaN(calculatedResult)) {
+      throw new Error("Invalid calculation");
+    }
+    result.textContent = calculatedResult; // Display the result
+    display.classList.add("moved");
+    result.classList.add("visible");
+
+    // Set the calculationDone flag to true
+    calculationDone = true;
+  } catch (error) {
+    result.textContent = "Error"; // Show error if calculation fails
+    displayValue = "0"; // Reset display value to 0 in case of error
+    updateDisplay();
+  }
+}
+
 // function clearDisplay() {
 //   // Add the current display (calculation) and result to history before clearing
 //   if (displayValue !== "0" || result.textContent !== "") {
@@ -56,106 +112,10 @@
 //   result.classList.add("visible");
 // }
 
-// function resetDisplayPosition() {
-//   display.classList.remove("moved");
-//   result.classList.remove("visible");
-// }
-// // Adding an event listener for "Enter" key
-// document.addEventListener("keydown", function (event) {
-//   if (event.key === "Enter") {
-//     event.preventDefault(); // Prevent default action (like form submission)
-//     calculate(); // Call the calculate function
-//   }
-// });
-// // Adding an event listener for the "Escape" key
-// document.addEventListener("keydown", function (event) {
-//   if (event.key === "Escape") {
-//     clearAll(); // Call a new function to clear everything
-//   }
-// });
-// function clearAll() {
-//   displayValue = "0"; // Reset display value
-//   calculateValue = ""; // Reset calculation value
-//   result.textContent = ""; // Clear result display
-//   updateDisplay(); // Update the display to show "0"
-//   resetDisplayPosition(); // Reset the display position if necessary
-// }
-// // Keyboard event listener for input
-// document.addEventListener("keydown", function (event) {
-//   const key = event.key;
-
-//   // Allow numbers and operators only
-//   if (/^[0-9]$/.test(key) || /^[+\-*/]$/.test(key)) {
-//     appendToDisplay(key);
-//   } else if (key === "Enter") {
-//     // Calculate result if Enter is pressed
-//     calculate();
-//   } else if (key === "Escape") {
-//     // Clear display if Escape is pressed
-//     clearDisplay();
-//   }
-// });
-let displayValue = "0";
-let calculateValue = "";
-const display = document.querySelector("#display");
-const result = document.querySelector("#result");
-const MAX_DISPLAY_LENGTH = 21;
-
-function updateDisplay() {
-  display.textContent = displayValue;
-}
-
-function appendToDisplay(value) {
-  // Check if we are at the maximum length and prevent further input
-  if (displayValue.length < MAX_DISPLAY_LENGTH) {
-    if (displayValue === "0" && value !== ".") {
-      displayValue = value; // Update display value
-      calculateValue = value; // Start new calculation
-    } else {
-      displayValue += value; // Append to display
-      calculateValue += value; // Append to calculation value
-    }
-    updateDisplay();
-    resetDisplayPosition();
-  } else {
-    console.log("Maximum input length reached.");
-  }
-}
-
-function clearDisplay() {
-  // Remove the last character from displayValue
-  if (displayValue.length > 1) {
-    displayValue = displayValue.slice(0, -1); // Remove the last character
-  } else {
-    displayValue = "0"; // If only one character, reset to "0"
-  }
-
-  // Update the result display and main display
-  result.textContent = ""; // Clear the result
-  updateDisplay(); // This updates the main display
-  resetDisplayPosition(); // Reset the display position if necessary
-}
-// Adding an event listener for the Escape key
-
-function calculate() {
-  try {
-    let calculatedResult = eval(calculateValue).toString();
-    if (calculatedResult === "Infinity" || isNaN(calculatedResult)) {
-      throw new Error("Invalid calculation");
-    }
-    result.textContent = calculatedResult; // Display the result
-    display.classList.add("moved");
-    result.classList.add("visible");
-  } catch (error) {
-    result.textContent = "Error"; // Show error if calculation fails
-  }
-}
-
 function resetDisplayPosition() {
   display.classList.remove("moved");
   result.classList.remove("visible");
 }
-
 // Adding an event listener for "Enter" key
 document.addEventListener("keydown", function (event) {
   if (event.key === "Enter") {
@@ -163,14 +123,12 @@ document.addEventListener("keydown", function (event) {
     calculate(); // Call the calculate function
   }
 });
-
 // Adding an event listener for the "Escape" key
 document.addEventListener("keydown", function (event) {
   if (event.key === "Escape") {
     clearAll(); // Call a new function to clear everything
   }
 });
-
 function clearAll() {
   displayValue = "0"; // Reset display value
   calculateValue = ""; // Reset calculation value
@@ -178,7 +136,6 @@ function clearAll() {
   updateDisplay(); // Update the display to show "0"
   resetDisplayPosition(); // Reset the display position if necessary
 }
-
 // Keyboard event listener for input
 document.addEventListener("keydown", function (event) {
   const key = event.key;
@@ -186,14 +143,12 @@ document.addEventListener("keydown", function (event) {
   // Allow numbers and operators only
   if (/^[0-9]$/.test(key) || /^[+\-*/]$/.test(key)) {
     appendToDisplay(key);
-  }
-});
-// Adding an event listener for the Escape key and Backspace key
-document.addEventListener("keydown", function (event) {
-  if (event.key === "Escape") {
-    clearDisplay(); // Call clearDisplay when Escape key is pressed
-  } else if (event.key === "Backspace") {
-    clearDisplay(); // Call clearDisplay when Backspace key is pressed
+  } else if (key === "Enter") {
+    // Calculate result if Enter is pressed
+    calculate();
+  } else if (key === "Escape") {
+    // Clear display if Escape is pressed
+    clearDisplay();
   }
 });
 function switchDisplay() {
@@ -216,7 +171,7 @@ dropbutton.addEventListener("click", function () {
     dropupcontent.style.display = "block";
   }
 });
-document.addEventListener("click", function (event) {
+dropupcontent.addEventListener("click", function (event) {
   if (
     !dropbutton.contains(event.target) &&
     !dropupcontent.contains(event.target)
@@ -236,7 +191,7 @@ dropbtn.addEventListener("click", function () {
     dropcontent.style.display = "block";
   }
 });
-document.addEventListener("click", function (event) {
+dropcontent.addEventListener("click", function (event) {
   if (!dropbtn.contains(event.target) && !dropcontent.contains(event.target)) {
     dropcontent.style.display = "none";
   }
@@ -458,4 +413,20 @@ function toggleButtons() {
 
   // Toggle the mode
   secondMode = !secondMode;
+}
+let isDegree = true; // Track the current state
+
+function toggleDegRad() {
+  const radButton = document.getElementById("radButton");
+  const radDisplay = document.getElementById("radDisplay");
+
+  if (isDegree) {
+    radButton.textContent = "Rad"; // Change button text to "Rad"
+    radDisplay.textContent = "Rad"; // Show "Rad" in the display
+  } else {
+    radButton.textContent = "Deg"; // Change button text back to "Deg"
+    radDisplay.textContent = ""; // Clear the rad display
+  }
+
+  isDegree = !isDegree; // Toggle the state
 }
