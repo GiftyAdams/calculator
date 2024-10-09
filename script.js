@@ -422,10 +422,10 @@ function toggleDegRad() {
 
   if (isDegree) {
     radButton.textContent = "Rad"; // Change button text to "Rad"
-    radDisplay.textContent = "Rad"; // Show "Rad" in the display
+    radDisplay.textContent = ""; // Clear the rad display when switching to Rad
   } else {
     radButton.textContent = "Deg"; // Change button text back to "Deg"
-    radDisplay.textContent = ""; // Clear the rad display
+    radDisplay.textContent = "Rad"; // Show "Rad" in the display when switching back to Deg
   }
 
   isDegree = !isDegree; // Toggle the state
